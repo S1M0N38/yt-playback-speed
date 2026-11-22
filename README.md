@@ -22,41 +22,27 @@ one that goes up to 3x, and it remembers the speed you pick.
 
 ## Install
 
-A build loaded through `about:debugging` is temporary: Firefox drops it on every
-restart, including restarts after a browser update. To keep the extension around,
-install a signed build instead.
+Download `yt-playback-speed-<version>.xpi` from the
+[latest release](https://github.com/S1M0N38/yt-playback-speed/releases/latest),
+then in Firefox open `about:addons` → gear icon → **Install Add-on From File…**
+and pick the file. The add-on is Mozilla-signed and installs permanently.
 
-### Permanent install
+For development, `about:debugging#/runtime/this-firefox` → *Load Temporary
+Add-on…* → `yt-playback-speed/manifest.json` (removed on every restart).
 
-One-time setup:
+## Release
 
-1. Create a free account on [addons.mozilla.org](https://addons.mozilla.org) and
-   generate API credentials at
-   <https://addons.mozilla.org/en-US/developers/addon/api/key/>.
-2. `cp .env.example .env` and paste the key/secret into it.
+It's a self-hosted, unlisted Firefox add-on. One-time setup: `cp .env.example .env`
+and fill in the [AMO API key/secret](https://addons.mozilla.org/en-US/developers/addon/api/key/).
 
-For every release:
+```bash
+# 1. bump "version" in yt-playback-speed/manifest.json
+./scripts/release.sh                        # lint + sign on AMO + update updates.json
+gh release create v<version> dist/yt-playback-speed-<version>.xpi
+git add updates.json && git commit -m "chore: release v<version>" && git push
+```
 
-1. Bump `version` in `yt-playback-speed/manifest.json`.
-2. `./scripts/release.sh` — lints, signs the add-on on AMO (unlisted channel) and
-   registers the build in `updates.json`. The signed file lands at
-   `dist/yt-playback-speed-<version>.xpi`.
-3. Publish that file as a GitHub release tagged `v<version>`, with the asset
-   named exactly `yt-playback-speed-<version>.xpi`:
-   `gh release create v<version> dist/yt-playback-speed-<version>.xpi`.
-4. Commit `updates.json` and push — this is what lets installed copies update
-   themselves.
+Installed copies update themselves within ~24h. Don't change `gecko.id` or
+`update_url` in the manifest: existing installs keep the values they were
+installed with.
 
-Install it: **Add-ons and themes** (`about:addons`) → gear icon →
-**Install Add-on From File** → pick the signed `.xpi` → **Add**.
-
-Firefox checks `update_url` roughly once a day; to force it, use *Check for
-Updates* in the add-on's context menu. Never change the add-on `id` or
-`update_url` in the manifest: installed copies keep using the values they were
-installed with, so a change silently breaks updates.
-
-### Temporary install (development)
-
-1. Open `about:debugging#/runtime/this-firefox`.
-2. Click *Load Temporary Add-on…* and select `yt-playback-speed/manifest.json`.
-3. Reload the YouTube tab.
