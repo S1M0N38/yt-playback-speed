@@ -42,6 +42,7 @@ npx --yes web-ext@latest sign --source-dir "$SRC" --channel unlisted \
 SIGNED=$(find dist -name '*.xpi' -print -quit)
 [[ -n "$SIGNED" ]] || { echo "no signed .xpi produced" >&2; exit 1; }
 mv "$SIGNED" "$XPI"
+cp "$XPI" dist/yt-playback-speed.xpi   # stable name for releases/latest/download
 
 HASH=$(shasum -a 256 "$XPI" | cut -d' ' -f1)
 
@@ -68,11 +69,10 @@ Signed: $XPI
 SHA256: $HASH
 
 Next:
-  gh release create v$VERSION "$XPI" --title "v$VERSION" --notes "v$VERSION"
+  gh release create v$VERSION "$XPI" dist/yt-playback-speed.xpi --title "v$VERSION"
   git add updates.json && git commit -m "chore: release v$VERSION"
   git push
 
-The release asset must be named exactly:
-  yt-playback-speed-$VERSION.xpi
-so that $LINK resolves.
+Upload both assets: the versioned one is what updates.json points to, the
+unversioned one keeps the latest-download link stable.
 EOF

@@ -22,27 +22,33 @@ one that goes up to 3x, and it remembers the speed you pick.
 
 ## Install
 
-Download `yt-playback-speed-<version>.xpi` from the
-[latest release](https://github.com/S1M0N38/yt-playback-speed/releases/latest),
-then in Firefox open `about:addons` → gear icon → **Install Add-on From File…**
-and pick the file. The add-on is Mozilla-signed and installs permanently.
+Click **[yt-playback-speed.xpi](https://github.com/S1M0N38/yt-playback-speed/releases/latest/download/yt-playback-speed.xpi)**
+and Firefox asks to install it — confirm, and it stays installed.
 
-For development, `about:debugging#/runtime/this-firefox` → *Load Temporary
-Add-on…* → `yt-playback-speed/manifest.json` (removed on every restart).
+If your browser saves the file instead, open `about:addons` → gear icon →
+**Install Add-on From File…** and pick it.
+
+## Development
+
+1. Open `about:debugging#/runtime/this-firefox`.
+2. Click *Load Temporary Add-on…*.
+3. Select `yt-playback-speed/manifest.json`.
+4. Reload the YouTube tab.
+
+Temporary add-ons are removed on every browser restart.
 
 ## Release
 
-It's a self-hosted, unlisted Firefox add-on. One-time setup: `cp .env.example .env`
-and fill in the [AMO API key/secret](https://addons.mozilla.org/en-US/developers/addon/api/key/).
+Self-hosted, unlisted Firefox add-on. One-time setup: `cp .env.example .env` and fill
+in the [AMO API key/secret](https://addons.mozilla.org/en-US/developers/addon/api/key/).
 
 ```bash
 # 1. bump "version" in yt-playback-speed/manifest.json
-./scripts/release.sh                        # lint + sign on AMO + update updates.json
-gh release create v<version> dist/yt-playback-speed-<version>.xpi
+./scripts/release.sh        # lint + sign on AMO + update updates.json
+gh release create v<version> dist/yt-playback-speed-<version>.xpi dist/yt-playback-speed.xpi
 git add updates.json && git commit -m "chore: release v<version>" && git push
 ```
 
 Installed copies update themselves within ~24h. Don't change `gecko.id` or
 `update_url` in the manifest: existing installs keep the values they were
 installed with.
-
