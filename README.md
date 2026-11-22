@@ -23,7 +23,8 @@ one that goes up to 3x, and it remembers the speed you pick.
 ## Install
 
 Click **[yt-playback-speed.xpi](https://github.com/S1M0N38/yt-playback-speed/releases/latest/download/yt-playback-speed.xpi)**
-and Firefox asks to install it — confirm, and it stays installed.
+and Firefox asks to install it — confirm, and it stays installed. Installed copies
+auto-update themselves from `updates.json` within ~24h.
 
 If your browser saves the file instead, open `about:addons` → gear icon →
 **Install Add-on From File…** and pick it.
