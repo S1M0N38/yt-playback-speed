@@ -1,0 +1,18 @@
+{
+  "addons": {
+    "yt-playback-speed@S1M0N38.github.io": {
+      "updates": [
+        {
+          "version": "1.9",
+          "update_link": "https://github.com/S1M0N38/yt-playback-speed/releases/download/v1.9/yt-playback-speed-1.9.xpi",
+          "update_hash": "sha256:c5cb6a77538851b75fd13c987bded59cf1000aa6db8ae378c1abda9c1c8d5936",
+          "applications": {
+            "gecko": {
+              "strict_min_version": "142.0"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

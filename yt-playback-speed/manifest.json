@@ -29,7 +29,9 @@
   },
   "browser_specific_settings": {
     "gecko": {
+      "id": "yt-playback-speed@S1M0N38.github.io",
       "strict_min_version": "142.0",
+      "update_url": "https://raw.githubusercontent.com/S1M0N38/yt-playback-speed/main/updates.json",
       "data_collection_permissions": {
         "required": [
           "none"
